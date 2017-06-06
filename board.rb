@@ -1,20 +1,36 @@
 require_relative 'piece'
+require_relative 'nullpiece'
+require_relative 'rook'
+require_relative 'knight'
+require_relative 'bishop'
+require_relative 'queen'
+require_relative 'king'
+require_relative 'pawn'
 
 class Board
   attr_accessor :grid
 
   def initialize
     @grid = Array.new(8) {Array.new(8)}
+    @null_piece = NullPiece.send :new
     make_starting_grid
+
   end
+  ROW = %w(Rook Knight Bishop Queen King Bishop Knight Rook)
 
   def make_starting_grid
     (0..7).each do |row|
       (0..7).each do |col|
-        if [0,1,6,7].include?(row)
-          @grid[row][col] = Piece.new
+        if row == 1
+          @grid[row][col] = Pawn.new(:black,[row,col], self)
+        elsif row == 6
+          @grid[row][col] = Pawn.new(:white,[row,col], self)
+        elsif row == 0
+          @grid[row][col] = eval(ROW[col]).new(:black,[row,col], self)
+        elsif row == 7
+          @grid[row][col] = eval(ROW[col]).new(:white,[row,col], self)
         else
-          @grid[row][col] = nil
+          @grid[row][col] = @null_piece
         end
       end
     end

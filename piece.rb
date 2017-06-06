@@ -1,24 +1,36 @@
+require_relative 'stepable'
+require_relative 'slideable'
+require 'colorize'
+
 class Piece
 
   attr_reader :display_symbol
 
-  def initialize(color,pos)
+  def initialize(color, starting_pos, board)
     @color = color
     @symbol = symbol
-    @display_symbol = :P
-    @current_pos = pos
+    @current_pos = starting_pos
+    @board = board
   end
 
   def to_s
-    @symbol.to_s
+    SYMBOLS[@symbol].colorize( @color )#in specific piece
   end
 
   def empty?
     false
   end
 
+  SYMBOLS = {Rook: " ♖ ",
+    Knight: " ♘ ",
+    Bishop: " ♗ ",
+    Queen: " ♕ ",
+    King: " ♔ ",
+    Pawn: " ♙ "
+  }
+
   def symbol
-    self.class.to_sym
+    self.class.to_s.to_sym
   end
 
   def valid_moves
@@ -28,35 +40,8 @@ class Piece
     board[move].empty?
   end
 
-  def move_into_check(to_pos)
-  end
-end
-
-module SlidingPiece
-  DIAG = [[1,1],[-1,-1],[1,-1],[-1,1]]
-  HOR = [[0,1],[0,-1],[1,0],[1,0]]
-
-  def moves
-    moves = []
-    i = 1
-    until i > 8
-      moves << @current_pos[0] + i * 
-    end
-  end
-end
-
-module SteppingPiece
-
-  def moves
-    poss_moves = []
-    self.move_diffs.each do |diff|
-      poss_moves << [@current_pos[0] + diff[0], @current_pos[1] + diff[1]]
-    end
-    poss_moves
-  end
-
   private
 
-  def move_diffs
+  def move_into_check(to_pos)
   end
 end
