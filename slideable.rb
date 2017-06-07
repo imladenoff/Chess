@@ -1,6 +1,6 @@
 module Slideable
   DIAG = [[1, 1], [-1, -1], [1, -1], [-1, 1]]
-  HOR = [[0, 1], [0, -1], [1, 0], [1, 0]]
+  HOR = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
   def moves
     move_dirs.map{ |dir| grow_unblocked_moves_in_dir(@current_pos, dir) }.flatten(1)

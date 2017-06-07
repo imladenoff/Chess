@@ -88,7 +88,9 @@ class Cursor
       update_pos(MOVES[key])
       nil
     when :return, :space
-      if @cursor_pos == @from_pos && @selected
+      if @board[@cursor_pos].class == NullPiece && !@selected
+        nil
+      elsif @cursor_pos == @from_pos && @selected
         @from_pos = nil
         @selected = false
       else

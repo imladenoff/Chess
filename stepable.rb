@@ -6,7 +6,6 @@ module Stepable
     poss_moves.select! do |move|
       next false unless move.all? { |coord| coord.between?(0,7) }
       next false if board[move].color == self.color
-      #break false if #TODO:puts king in check
       true
     end
     poss_moves
