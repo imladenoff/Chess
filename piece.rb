@@ -4,8 +4,8 @@ require 'colorize'
 
 class Piece
 
-  attr_reader :display_symbol, :current_pos, :color
-  attr_accessor :board
+  attr_reader :display_symbol, :color
+  attr_accessor :board, :current_pos
 
   def initialize(color, starting_pos, board)
     @color = color
@@ -35,7 +35,6 @@ class Piece
   end
 
   def valid_moves
-    p moves
     moves.reject do |move|
       move_into_check?(move)
     end
