@@ -4,7 +4,8 @@ require 'colorize'
 
 class Piece
 
-  attr_reader :display_symbol
+  attr_reader :display_symbol, :current_pos
+  attr_accessor :board
 
   def initialize(color, starting_pos, board)
     @color = color
@@ -34,14 +35,16 @@ class Piece
   end
 
   def valid_moves
-    on_board = self.moves.select do |move|
-      move.all? { |coord| (0..7).include? coord }
+    moves.reject do |move|
+      move_into_check?(move)
     end
-    board[move].empty?
   end
 
   private
 
-  def move_into_check(to_pos)
+  def move_into_check?(to_pos)
+    temp_board = @board.dup
+    temp_board.move_piece!(@current_pos, to_pos)
+    temp_board.in_check?(@color)
   end
 end

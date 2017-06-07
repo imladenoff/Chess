@@ -22,8 +22,8 @@ class Pawn < Piece
       elsif i > 1 && @board[new_pos].color != self.color && @board[new_pos].class != NullPiece
         poss_moves << new_pos
       end
-      poss_moves
     end
+    poss_moves.select { |move| move.all { |coord| coord.between?(0,7) } }
   end
 
   protected
