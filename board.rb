@@ -54,6 +54,7 @@ class Board
         piece.board = new_board
       end
     end
+    new_board
   end
 
   def dup_grid(grid)
@@ -70,18 +71,19 @@ class Board
   end
 
   def move_piece(color, from_pos, to_pos)
-    raise Exception.new if self[from_pos].class == NullPiece
-    raise Exception.new unless self[to_pos].color == color
+    raise "null" if self[from_pos].class == NullPiece
+    raise "color" unless self[from_pos].color == color
     piece = self[from_pos]
     moves = piece.valid_moves
-    raise Exception.new unless moves.include?(to_pos)
+    raise "invalid move" unless moves.include?(to_pos)
     move_piece!(from_pos, to_pos)
-  rescue Exception
-    puts "Invalid move."
+  # rescue Exception
+  #   puts "Invalid move."
   end
 
   def move_piece!(from_pos, to_pos)
-    self[from_pos], self[to_pos] = @null_piece, self[from_pos]
+    self[to_pos] = self[from_pos]
+    self[from_pos] = @null_piece
   end
 
   def in_bounds?(pos)

@@ -14,8 +14,12 @@ module Slideable
 
   def grow_unblocked_moves_in_dir(start_pos, dir)
     new_pos = [start_pos[0] + dir[0], start_pos[1] + dir[1]]
+    p new_pos
+    p self.class
+    p self.color
+    p board[new_pos].class
+    return [] unless new_pos.all? { |coord| coord.between?(0,7)}
     return [] if board[new_pos].color == self.color
-    return [] if new_pos.all? { |coord| coord.between?(0,7)}
     return [new_pos] if board[new_pos].class != NullPiece && board[new_pos].color != self.color
     [new_pos] + grow_unblocked_moves_in_dir(new_pos, dir)
   end
